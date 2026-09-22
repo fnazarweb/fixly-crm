@@ -1,41 +1,41 @@
 services:
-  postgres:
-    image: postgres:16
-    restart: unless-stopped
-    environment:
-      POSTGRES_USER: fixly
-      POSTGRES_PASSWORD: fixly
-      POSTGRES_DB: fixly_crm
-    ports:
-      - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
+    postgres:
+        image: postgres:16
+        restart: unless-stopped
+        environment:
+            POSTGRES_USER: fixly
+            POSTGRES_PASSWORD: fixly
+            POSTGRES_DB: fixly_crm
+        ports:
+            - '5432:5432'
+        volumes:
+            - pgdata:/var/lib/postgresql/data
 
-  backend:
-    image: node:20
-    working_dir: /app
-    command: sh -c "npm install && npm run dev"
-    volumes:
-      - ./backend:/app
-      - /app/node_modules
-    environment:
-      DATABASE_URL: postgresql://fixly:fixly@postgres:5432/fixly_crm
-    ports:
-      - "5000:5000"
-    depends_on:
-      - postgres
+    backend:
+        image: node:22
+        working_dir: /app
+        command: sh -c "npm install && npm run dev"
+        volumes:
+            - ./backend:/app
+            - /app/node_modules
+        environment:
+            DATABASE_URL: postgresql://fixly:fixly@postgres:5432/fixly_crm
+        ports:
+            - '5000:5000'
+        depends_on:
+            - postgres
 
-  frontend:
-    image: node:20
-    working_dir: /app
-    command: sh -c "npm install && npm run dev -- --host"
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-    ports:
-      - "5173:5173"
-    depends_on:
-      - backend
+    frontend:
+        image: node:22
+        working_dir: /app
+        command: sh -c "npm install && npm run dev -- --host"
+        volumes:
+            - ./frontend:/app
+            - /app/node_modules
+        ports:
+            - '5173:5173'
+        depends_on:
+            - backend
 
 volumes:
-  pgdata:
+    pgdata:
