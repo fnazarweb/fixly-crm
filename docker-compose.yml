@@ -17,6 +17,7 @@ services:
     command: sh -c "npm install && npm run dev"
     volumes:
       - ./backend:/app
+      - /app/node_modules
     environment:
       DATABASE_URL: postgresql://fixly:fixly@postgres:5432/fixly_crm
     ports:
@@ -30,6 +31,7 @@ services:
     command: sh -c "npm install && npm run dev -- --host"
     volumes:
       - ./frontend:/app
+      - /app/node_modules
     ports:
       - "5173:5173"
     depends_on:
