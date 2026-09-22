@@ -1,0 +1,51 @@
+# --- Dependencies ---
+node_modules/
+frontend/node_modules/
+backend/node_modules/
+
+# --- Environment variables (секрети, паролі, DATABASE_URL) ---
+.env
+.env.local
+.env.*.local
+backend/.env
+frontend/.env
+
+# --- Логи ---
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# --- Frontend build (Vite) ---
+frontend/dist/
+frontend/.vite/
+
+# --- Backend build ---
+backend/dist/
+backend/build/
+
+# --- Prisma ---
+# міграції НЕ ігноруємо (вони мають бути в git),
+# але локальний dev.db (якщо колись тестуватимеш на SQLite) - так
+backend/prisma/dev.db
+backend/prisma/dev.db-journal
+
+# --- Docker ---
+# локальні дані контейнерів, якщо колись монтуватимеш bind-маунт замість named volume
+docker-data/
+
+# --- OS-специфічне сміття ---
+.DS_Store
+Thumbs.db
+
+# --- Редактори / IDE ---
+.vscode/
+.idea/
+*.swp
+
+# --- Тести / coverage ---
+coverage/
+
+# --- Тимчасові файли ---
+*.tmp
+*.temp

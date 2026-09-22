@@ -6,9 +6,9 @@
 
 ## Крок 0. Підготовка репозиторію (30–60 хв)
 
-1. Створи папку `fixly-crm/`, а в ній `frontend/`, `backend/`, `docs/`.
-2. `git init`, перший commit із порожньою структурою.
-3. Поклади файли `project.md`, `database.md`, `api.md`, `ui.md`, `TODO.md`
+1. Створи папку `fixly-crm/`, а в ній `frontend/`, `backend/`, `docs/`. ✔
+2. `git init`, перший commit із порожньою структурою. ✔
+3. Поклади файли `project.md`, `database.md`, `api.md`, `ui.md`, `TODO.md` ✔
    у `docs/` — вони тепер твоя "єдина правда" про проєкт, звіряйся з ними,
    коли забуваєш деталі.
 
@@ -16,8 +16,8 @@
 
 Мета — просто підняти сервер і базу, без жодної реальної фічі.
 
-1. `cd backend && npm init -y`
-2. Встанови Express: `npm install express`
+1. `cd backend && npm init -y` ✔
+2. Встанови Express: `npm install express` ✔
 3. Встанови PostgreSQL локально (або підніми через `docker run postgres`).
 4. Встанови Prisma: `npm install prisma --save-dev` і `npm install @prisma/client`
 5. `npx prisma init` — це створить `prisma/schema.prisma` і `.env`
@@ -45,7 +45,7 @@
 Це найважливіший крок, тому що саме тут закладається мультитенантність.
 
 1. Backend: `POST /api/auth/register` — приймає `businessName, name, email,
-   password`, створює `Business` і `User` з роллю `admin` **в одній
+password`, створює `Business` і `User` з роллю `admin` **в одній
    транзакції** (`prisma.$transaction`).
 2. Захешуй пароль через `bcrypt` перед збереженням.
 3. `POST /api/auth/login` — перевіряє пароль, видає JWT (access token),
