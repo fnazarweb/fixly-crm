@@ -28,7 +28,7 @@
 7. У `backend/package.json` додай скрипт `dev` (знадобиться `nodemon`) ✔
 8. Зроби мінімальний `backend/src/server.js` з одним роутом `GET /health` ✔
 9. У `backend/.env` `DATABASE_URL` потрібен лише для команд, які запускаєш
-   **поза** контейнером (наприклад `npx prisma studio` прямо з хоста):
+   **поза** контейнером (наприклад `npx prisma studio` прямо з хоста): ✔
     ```
     DATABASE_URL="postgresql://fixly:fixly@localhost:5432/fixly_crm"
     ```
