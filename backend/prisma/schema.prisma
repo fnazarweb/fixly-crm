@@ -28,6 +28,9 @@ model Business {
   name String
   createdAt DateTime @default(now())
   users User[]
+  customers Customer[]
+  services Service[]
+  appointments Appointment[]
 }
 
 model User {
@@ -36,8 +39,56 @@ model User {
   email String @unique
   password String
   role Role
+  appointments Appointment[]
   businessId String @db.Uuid
 
-  business Business @relation(fields: [businessId], references: [id])
+  business Business @relation(fields: [businessId], references: [id], onDelete: Restrict)
+
+  @@index([businessId])
 }
 
+model Customer {
+  id String @id @default(uuid()) @db.Uuid
+  name String
+  email String?
+  phone String?
+  appointments Appointment[]
+  businessId String @db.Uuid
+
+  business Business @relation(fields: [businessId], references: [id], onDelete: Restrict)
+
+  @@index([businessId])
+
+}
+
+model Service {
+  id String @id @default(uuid()) @db.Uuid
+  name String
+  description String?
+  price Decimal
+  duration Int
+  appointments Appointment[]  
+  businessId String @db.Uuid
+
+  business Business @relation(fields: [businessId], references: [id], onDelete: Restrict)
+
+  @@index([businessId])
+}
+
+
+model Appointment {
+  id String @id @default(uuid()) @db.Uuid
+  date DateTime
+  status Status 
+  customerId String @db.Uuid
+  serviceId String @db.Uuid
+  employeeId String @db.Uuid
+  businessId String @db.Uuid
+
+  customer Customer @relation(fields: [customerId], references: [id], onDelete: Restrict)
+  service Service @relation(fields: [serviceId], references: [id], onDelete: Restrict)
+  employee User @relation(fields: [employeeId], references: [id], onDelete: Restrict)
+  business Business @relation(fields: [businessId], references: [id], onDelete: Restrict)
+
+  @@index([businessId, date])
+}

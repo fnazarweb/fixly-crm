@@ -14,15 +14,15 @@
 - [ ] Розібратись із базовими поняттями: table, row, primary key, foreign key, relation [x]
 - [ ] Встановити PostgreSQL локально (або через Docker) [x]
 - [ ] Ініціалізувати Prisma в `backend/` [x]
-- [ ] Створити першу тестову модель і зробити міграцію
-- [ ] Перевірити дані через Prisma Studio
+- [ ] Створити першу тестову модель і зробити міграцію [x]
+- [ ] Перевірити дані через Prisma Studio [x]
 
 ## 2. Проєктування бази даних
 
-- [ ] Описати моделі: Business, User, Customer, Service, Appointment
-- [ ] Прописати зв'язки (foreign keys) між ними
-- [ ] Зробити `npx prisma migrate dev`
-- [ ] Звірити схему з `docs/database.md`
+- [ ] Описати моделі: Business, User, Customer, Service, Appointment [x]
+- [ ] Прописати зв'язки (foreign keys) між ними [x]
+- [ ] Зробити `npx prisma migrate dev` [x]
+- [ ] Звірити схему з `docs/database.md` [x]
 
 ## 3. Backend foundation
 
