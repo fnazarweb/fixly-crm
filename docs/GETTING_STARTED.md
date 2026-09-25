@@ -34,12 +34,12 @@
     ```
     Усередині самого контейнера бекенд отримує **інший** `DATABASE_URL`
     (з хостом `postgres` замість `localhost`) — він уже прописаний прямо в
-    `docker-compose.yml`, змінювати нічого не треба.
+    `docker-compose.yml`, змінювати нічого не треба. ✔
 10. З кореня проєкту підніми все одразу:
     ```bash
-    docker compose up
+    docker compose up ✔
     ```
-11. Перевір `http://localhost:5000/health` у браузері/Postman.
+11. Перевір `http://localhost:5000/health` у браузері/Postman. ✔
 
 **Чекпоінт:** одна команда `docker compose up` піднімає базу й бекенд разом,
 `/health` відповідає, зміни в коді на хості одразу підхоплюються (hot reload
@@ -49,18 +49,18 @@ Docker.
 ## Крок 2. Схема бази даних (день 2–3)
 
 1. Відкрий `docs/database.md` і перенеси моделі `Business`, `User`,
-   `Customer`, `Service`, `Appointment` у `prisma/schema.prisma`.
+   `Customer`, `Service`, `Appointment` у `prisma/schema.prisma`.✔
 2. Прописуй зв'язки по одному — спочатку `Business ↔ User`, зроби міграцію,
    перевір у Prisma Studio (`npx prisma studio`, з хоста, не з контейнера),
    що все як очікувалось. Потім додай наступну модель і так по черзі — не
-   пиши всю схему одразу.
+   пиши всю схему одразу. ✔
 3. Коли всі 5 моделей на місці і зв'язки правильні — зроби фінальну
-   `npx prisma migrate dev --name init`.
+   `npx prisma migrate dev --name init`. ✔
 
 **Чекпоінт:** у Prisma Studio видно всі 5 таблиць з правильними зв'язками.
 Контейнер `backend` (якщо запущений через `docker compose up`) сам
 підхоплює нову схему при наступному запиті — окремо нічого перезапускати
-не треба.
+не треба. ✔
 
 ## Крок 3. Авторизація — перший наскрізний функціонал (день 3–5)
 
