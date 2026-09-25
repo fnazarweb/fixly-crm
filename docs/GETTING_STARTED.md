@@ -64,14 +64,14 @@ Docker.
 
 ## Крок 3. Авторизація — перший наскрізний функціонал (день 3–5)
 
-Це найважливіший крок, тому що саме тут закладається мультитенантність.
+Це найважливіший крок, тому що саме тут закладається мультитенантність. ✔
 
 1. Backend: `POST /api/auth/register` — приймає `businessName, name, email,
 password`, створює `Business` і `User` з роллю `admin` **в одній
-   транзакції** (`prisma.$transaction`).
-2. Захешуй пароль через `bcrypt` перед збереженням.
+   транзакції** (`prisma.$transaction`). ✔
+2. Захешуй пароль через `bcrypt` перед збереженням. ✔
 3. `POST /api/auth/login` — перевіряє пароль, видає JWT (access token),
-   поклади його в httpOnly cookie.
+   поклади його в httpOnly cookie. ✔
 4. Напиши middleware `authenticate`, який читає токен, дістає `userId` і
    `businessId`, кладе їх у `req.user`.
 5. Створи один тестовий захищений роут (`GET /api/auth/me`), щоб перевірити,

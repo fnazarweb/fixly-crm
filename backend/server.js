@@ -1,22 +1,30 @@
 import express from 'express';
-import { PrismaClient } from './generated/prisma/client.ts';
+import cors from 'cors';
+import { errorHandler } from './src/middleware/errorHandler.js';
+import apiRouter from './src/routes/api.js';
 
 const app = express();
-import { PrismaPg } from '@prisma/adapter-pg';
 
-const adapter = new PrismaPg({
-    connectionString: process.env.DATABASE_URL,
-});
+const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
 
-const prisma = new PrismaClient({ adapter });
+// Allows frontend to access responses from server
+app.use(
+    cors({
+        origin: clientUrl,
+        credentials: true,
+    })
+);
 
 app.use(express.json());
-
-const PORT = 5000;
+app.use('/api', apiRouter);
 
 app.get('/health', (req, res) => {
     res.status(200).send('OK');
 });
+
+app.use(errorHandler); // should be after all middlewares and routes
+
+const PORT = process.env.PORT;
 
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server listening on http://0.0.0.0:${PORT}`);

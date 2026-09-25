@@ -26,17 +26,17 @@
 
 ## 3. Backend foundation
 
-- [ ] Налаштувати Express-сервер (`server.js`)
-- [ ] Підключити Prisma Client
-- [ ] Налаштувати `.env` (DATABASE_URL, JWT_SECRET, PORT)
-- [ ] Створити структуру `src/controllers`, `src/routes`, `src/middleware`, `src/services`
-- [ ] Глобальний error handler middleware
+- [ ] Налаштувати Express-сервер (`server.js`) [x]
+- [ ] Підключити Prisma Client [x]
+- [ ] Налаштувати `.env` (DATABASE_URL, JWT_SECRET, PORT) [x]
+- [ ] Створити структуру `src/controllers`, `src/routes`, `src/middleware`, `src/services` [x]
+- [ ] Глобальний error handler middleware [x]
 
 ## 4. Authentication
 
-- [ ] `POST /api/auth/register` — створює Business + admin User
+- [ ] `POST /api/auth/register` — створює Business + admin User [x]
 - [ ] `POST /api/auth/login` — видає access + refresh токени
-- [ ] `POST /api/auth/logout`
+- [ ] `POST /api/auth/logout` [x]
 - [ ] Middleware `authenticate` (перевірка JWT)
 - [ ] Middleware `authorize(role)` (перевірка ролі)
 - [ ] Frontend: сторінки Login/Register
