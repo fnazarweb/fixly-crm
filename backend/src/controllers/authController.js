@@ -25,8 +25,15 @@ const logout = async (req, res) => {
     res.status(204).end();
 };
 
+const me = async (req, res) => {
+    res.status(201).json({
+        user: req.user,
+    });
+};
+
 export default {
     register,
     login,
     logout,
+    me,
 };

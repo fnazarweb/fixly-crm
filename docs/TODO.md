@@ -37,8 +37,8 @@
 - [ ] `POST /api/auth/register` — створює Business + admin User [x]
 - [ ] `POST /api/auth/login` — видає access + refresh токени
 - [ ] `POST /api/auth/logout` [x]
-- [ ] Middleware `authenticate` (перевірка JWT)
-- [ ] Middleware `authorize(role)` (перевірка ролі)
+- [ ] Middleware `authenticate` (перевірка JWT) ✔
+- [ ] Middleware `authorize(role)` (перевірка ролі) ✔
 - [ ] Frontend: сторінки Login/Register
 - [ ] Frontend: `ProtectedRoute` компонент
 

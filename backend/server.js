@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import { errorHandler } from './src/middleware/errorHandler.js';
 import apiRouter from './src/routes/api.js';
 
@@ -16,6 +17,8 @@ app.use(
 );
 
 app.use(express.json());
+app.use(cookieParser());
+
 app.use('/api', apiRouter);
 
 app.get('/health', (req, res) => {

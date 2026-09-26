@@ -73,9 +73,9 @@ password`, створює `Business` і `User` з роллю `admin` **в одн
 3. `POST /api/auth/login` — перевіряє пароль, видає JWT (access token),
    поклади його в httpOnly cookie. ✔
 4. Напиши middleware `authenticate`, який читає токен, дістає `userId` і
-   `businessId`, кладе їх у `req.user`.
+   `businessId`, кладе їх у `req.user`. ✔
 5. Створи один тестовий захищений роут (`GET /api/auth/me`), щоб перевірити,
-   що middleware працює.
+   що middleware працює. ✔
 6. Тільки після цього переходь на frontend: сторінки `/register`, `/login`,
    `ProtectedRoute`. Якщо `frontend/` ще порожня — спочатку створи проєкт
    через `npm create vite@latest frontend -- --template react` (з хоста, не
