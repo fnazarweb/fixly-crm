@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 const register = async (data) => {
-    const { businessName, name, email, password: pwd, role } = data;
+    const { businessName, name, email, password: pwd } = data;
 
     return prisma.$transaction(async (tx) => {
         const business = await tx.business.create({
@@ -20,7 +20,6 @@ const register = async (data) => {
                 name,
                 email,
                 password,
-                role,
                 businessId: business.id,
             },
         });
@@ -53,4 +52,9 @@ const login = async (data) => {
     return { userData, token };
 };
 
-export default { register, login };
+const me = (data) => {
+    if (!data.user) throw new Error('Unauthorized');
+    return data.user;
+};
+
+export default { register, login, me };

@@ -26,8 +26,9 @@ const logout = async (req, res) => {
 };
 
 const me = async (req, res) => {
+    const user = authService.me(req);
     res.status(201).json({
-        user: req.user,
+        user,
     });
 };
 

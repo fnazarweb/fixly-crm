@@ -30,6 +30,10 @@ services:
                   target: /app
                   ignore:
                       - node_modules/
+                      - generated/
+                - action: rebuild
+                  path: ./backend/prisma/schema.prisma
+
                 - action: rebuild
                   path: ./backend/package.json
 

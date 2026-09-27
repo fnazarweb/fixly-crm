@@ -38,7 +38,7 @@ model User {
   name String
   email String @unique
   password String
-  role Role
+  role Role @default(admin)
   appointments Appointment[]
   businessId String @db.Uuid
 
