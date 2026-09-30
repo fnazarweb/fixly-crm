@@ -1,25 +1,22 @@
-import { useRef } from 'react';
-import { hasEmptyValue } from '../utils/validate';
+import { useForm } from 'react-hook-form';
 import { useLoginMutation } from '../store/authApi';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { loginSchema } from '../validation/authSchema';
 
 const Login = () => {
-    const emailRef = useRef(null);
-    const pwdRef = useRef(null);
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting },
+    } = useForm({ resolver: zodResolver(loginSchema) });
+
     const location = useLocation();
     const navigate = useNavigate();
 
     const [login, { isLoading, isError, error }] = useLoginMutation();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const email = emailRef.current.value;
-        const password = pwdRef.current.value;
-
-        if (hasEmptyValue([email, password])) {
-            return;
-        }
-
+    const onSubmit = async ({ email, password }) => {
         const loginData = {
             email: email.toLowerCase(),
             password,
@@ -38,14 +35,28 @@ const Login = () => {
 
     return (
         !isLoading && (
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <label htmlFor="email">Email</label>
-                <input ref={emailRef} name="email" id="email" />
+                <input
+                    id="email"
+                    {...register('email', {
+                        required: 'Email is required',
+                    })}
+                />
+                {errors.email && <p>{errors.email.message}</p>}
 
                 <label htmlFor="password">Password</label>
-                <input ref={pwdRef} name="password" id="password" />
+                <input
+                    id="password"
+                    {...register('password', {
+                        required: 'Password is required',
+                    })}
+                />
+                {errors.password && <p>{errors.password.message}</p>}
 
-                <button type="submit">Login</button>
+                <button type="submit" disabled={isSubmitting}>
+                    Login
+                </button>
             </form>
         )
     );

@@ -6,7 +6,6 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Layout from './Layout/Layout';
-import Logout from './components/Logout';
 
 function App() {
     return (
@@ -21,7 +20,6 @@ function App() {
 
                 <Route element={<ProtectedRoute />}>
                     <Route path="dashboard" element={<Dashboard />}></Route>
-                    <Route path="logout" element={<Logout />}></Route>
                 </Route>
             </Route>
         </Routes>

@@ -1,40 +1,26 @@
-import { useRef } from 'react';
-import { hasEmptyValue } from '../utils/validate';
+import { useForm } from 'react-hook-form';
 import { useRegisterMutation } from '../store/authApi';
 import { useNavigate } from 'react-router-dom';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { registerSchema } from '../validation/authSchema';
 
 const Register = () => {
-    const nameRef = useRef(null);
-    const emailRef = useRef(null);
-    const businessRef = useRef(null);
-    const pwdRef = useRef(null);
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting },
+    } = useForm({
+        resolver: zodResolver(registerSchema),
+    });
 
     const navigate = useNavigate();
 
-    const [register, { isLoading, isError, error }] = useRegisterMutation();
+    const [registerUser, { isLoading, isError, error }] = useRegisterMutation();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        const name = nameRef.current.value;
-        const email = emailRef.current.value;
-        const business = businessRef.current.value;
-        const password = pwdRef.current.value;
-
-        if (hasEmptyValue([name, email, business, password])) {
-            return;
-        }
-
-        const registerData = {
-            name: name,
-            email: email.toLowerCase(),
-            businessName: business,
-            password,
-        };
-
+    const onSubmit = async (registerData) => {
         try {
             //using unwrap to have possibility doing try catch
-            const result = await register(registerData).unwrap();
+            const result = await registerUser(registerData).unwrap();
             console.log(result);
             navigate('/login', {
                 replace: true,
@@ -46,20 +32,26 @@ const Register = () => {
 
     return (
         !isLoading && (
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <label htmlFor="name">Full Name</label>
-                <input ref={nameRef} name="name" id="name" />
+                <input id="name" {...register('name')} />
+                {errors.name && <p>{errors.name.message}</p>}
 
                 <label htmlFor="email">Email</label>
-                <input ref={emailRef} name="email" id="email" />
+                <input id="email" {...register('email')} />
+                {errors.email && <p>{errors.email.message}</p>}
 
                 <label htmlFor="business">Business name</label>
-                <input ref={businessRef} name="business" id="business" />
+                <input id="business" {...register('businessName')} />
+                {errors.businessName && <p>{errors.businessName.message}</p>}
 
                 <label htmlFor="password">Password</label>
-                <input ref={pwdRef} name="password" id="password" />
+                <input id="password" {...register('password')} />
+                {errors.password && <p>{errors.password.message}</p>}
 
-                <button type="submit">Register</button>
+                <button type="submit" disabled={isSubmitting}>
+                    Register
+                </button>
             </form>
         )
     );
