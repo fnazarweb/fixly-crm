@@ -8,6 +8,7 @@ const Login = () => {
     const {
         register,
         handleSubmit,
+        setError,
         formState: { errors, isSubmitting },
     } = useForm({ resolver: zodResolver(loginSchema) });
 
@@ -16,12 +17,7 @@ const Login = () => {
 
     const [login, { isLoading, isError, error }] = useLoginMutation();
 
-    const onSubmit = async ({ email, password }) => {
-        const loginData = {
-            email: email.toLowerCase(),
-            password,
-        };
-
+    const onSubmit = async (loginData) => {
         try {
             const user = await login(loginData).unwrap();
             console.log(user);
@@ -29,6 +25,12 @@ const Login = () => {
                 replace: true,
             });
         } catch (e) {
+            if (e.status === 401) {
+                setError('root', {
+                    type: 'server',
+                    message: e.data.message,
+                });
+            }
             console.error('Error: ', e.data.message);
         }
     };
@@ -53,6 +55,8 @@ const Login = () => {
                     })}
                 />
                 {errors.password && <p>{errors.password.message}</p>}
+
+                {errors.root?.message && <p>{errors.root.message}</p>}
 
                 <button type="submit" disabled={isSubmitting}>
                     Login

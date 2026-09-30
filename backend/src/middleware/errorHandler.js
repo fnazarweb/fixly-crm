@@ -1,5 +1,10 @@
+import AppError from '../errors/AppError.js';
+
 export const errorHandler = (err, req, res, next) => {
     console.error(err);
+    if (err instanceof AppError) {
+        return res.status(err.statusCode).json({ message: err.message });
+    }
 
     switch (err.code) {
         case 'P2002':

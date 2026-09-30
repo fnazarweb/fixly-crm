@@ -8,6 +8,7 @@ const Register = () => {
     const {
         register,
         handleSubmit,
+        setError,
         formState: { errors, isSubmitting },
     } = useForm({
         resolver: zodResolver(registerSchema),
@@ -26,6 +27,9 @@ const Register = () => {
                 replace: true,
             });
         } catch (e) {
+            if (e.status === 409) {
+                setError('email', { type: 'server', message: e.data.message });
+            }
             console.error('Error: ', e.data.message);
         }
     };
