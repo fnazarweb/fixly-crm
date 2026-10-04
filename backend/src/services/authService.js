@@ -2,42 +2,44 @@ import { prisma } from '../config/prisma.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import AppError from '../errors/AppError.js';
+import { Prisma } from '../../generated/prisma/client.ts';
 
 const register = async (data) => {
     const { businessName, name, email, password: pwd } = data;
-    const existingUser = await prisma.user.findUniqueOrThrow({
-        where: {
-            email,
-        },
-    });
 
-    // Сreate and throw own error if email already used
-    if (existingUser) {
-        throw new AppError('This email is already registered', 409);
+    try {
+        return prisma.$transaction(async (tx) => {
+            const business = await tx.business.create({
+                data: {
+                    name: businessName,
+                },
+            });
+
+            const salt = await bcrypt.genSalt();
+            const password = await bcrypt.hash(pwd, salt);
+
+            const user = await tx.user.create({
+                data: {
+                    name,
+                    email,
+                    password,
+                    businessId: business.id,
+                },
+            });
+
+            const { password: _, ...userData } = user;
+            return { business, userData };
+        });
+    } catch (err) {
+        if (
+            err instanceof Prisma.PrismaClientKnownRequestError &&
+            err.code === 'P2002'
+        ) {
+            // Сreate and throw own error if email was already used
+            throw new AppError('This email is already registered', 409);
+        }
+        throw err;
     }
-
-    return prisma.$transaction(async (tx) => {
-        const business = await tx.business.create({
-            data: {
-                name: businessName,
-            },
-        });
-
-        const salt = await bcrypt.genSalt();
-        const password = await bcrypt.hash(pwd, salt);
-
-        const user = await tx.user.create({
-            data: {
-                name,
-                email,
-                password,
-                businessId: business.id,
-            },
-        });
-
-        const { password: _, ...userData } = user;
-        return { business, userData };
-    });
 };
 
 const login = async (data) => {

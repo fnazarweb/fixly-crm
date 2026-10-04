@@ -23,59 +23,63 @@ Business
 
 ### Business
 
-| Поле | Тип       | Опис                    |
-|------|-----------|-------------------------|
-| id   | UUID/Int  | Первинний ключ          |
-| name | String    | Назва бізнесу           |
-| createdAt | DateTime | Дата створення     |
+| Поле      | Тип      | Опис           |
+| --------- | -------- | -------------- |
+| id        | UUID/Int | Первинний ключ |
+| name      | String   | Назва бізнесу  |
+| createdAt | DateTime | Дата створення |
 
 На пізнішому етапі сюди додаються робочі години, часова зона, план підписки.
 
 ### User
 
-| Поле       | Тип      | Опис                              |
-|------------|----------|------------------------------------|
-| id         | UUID/Int | Первинний ключ                    |
-| name       | String   | Ім'я користувача                  |
+| Поле       | Тип      | Опис                                    |
+| ---------- | -------- | --------------------------------------- |
+| id         | UUID/Int | Первинний ключ                          |
+| name       | String   | Ім'я користувача                        |
 | email      | String   | Унікальний, використовується для логіну |
-| password   | String   | Хеш пароля (bcrypt)                |
-| role       | Enum     | `admin` \| `employee`              |
-| businessId | FK       | Посилання на Business              |
+| password   | String   | Хеш пароля (bcrypt)                     |
+| role       | Enum     | `admin` \| `employee`                   |
+| businessId | FK       | Посилання на Business                   |
 
 Перший користувач, який реєструє бізнес, автоматично отримує роль `admin`.
 
 ### Customer
 
-| Поле       | Тип      | Опис                     |
-|------------|----------|--------------------------|
-| id         | UUID/Int | Первинний ключ           |
-| name       | String   | Ім'я клієнта             |
-| email      | String?  | Необов'язково            |
-| phone      | String?  | Необов'язково            |
-| businessId | FK       | Посилання на Business    |
+| Поле       | Тип      | Опис                  |
+| ---------- | -------- | --------------------- |
+| id         | UUID/Int | Первинний ключ        |
+| name       | String   | Ім'я клієнта          |
+| email      | String?  | Необов'язково         |
+| phone      | String   | Обов'язково           |
+| businessId | FK       | Посилання на Business |
+
+Клієнт не може повторюватись в одному бізнесі, але може в різних,
+тому треба зробити унікальну зв'язку індексів за допомогою @@unique([businessId, phone]),
+@@unique([businessId, email])
 
 ### Service
 
-| Поле        | Тип      | Опис                        |
-|-------------|----------|------------------------------|
-| id          | UUID/Int | Первинний ключ               |
-| name        | String   | Напр. "Haircut"               |
-| description | String?  | Опис послуги                  |
-| price       | Decimal  | Напр. 80.00                   |
-| duration    | Int      | У хвилинах, напр. 45           |
-| businessId  | FK       | Посилання на Business          |
+| Поле        | Тип      | Опис                  |
+| ----------- | -------- | --------------------- |
+| id          | UUID/Int | Первинний ключ        |
+| name        | String   | Напр. "Haircut"       |
+| description | String?  | Опис послуги          |
+| price       | Decimal  | Напр. 80.00           |
+| duration    | Int      | У хвилинах, напр. 45  |
+| businessId  | FK       | Посилання на Business |
 
 ### Appointment
 
-| Поле       | Тип      | Опис                                        |
-|------------|----------|----------------------------------------------|
-| id         | UUID/Int | Первинний ключ                                |
-| customerId | FK       | Посилання на Customer                          |
-| serviceId  | FK       | Посилання на Service                           |
-| employeeId | FK       | Посилання на User (роль employee)              |
-| businessId | FK       | Посилання на Business                          |
-| date       | DateTime | Дата й час запису                              |
-| status     | Enum     | `scheduled` \| `completed` \| `cancelled`      |
+| Поле       | Тип      | Опис                                      |
+| ---------- | -------- | ----------------------------------------- |
+| id         | UUID/Int | Первинний ключ                            |
+| customerId | FK       | Посилання на Customer                     |
+| serviceId  | FK       | Посилання на Service                      |
+| employeeId | FK       | Посилання на User (роль employee)         |
+| businessId | FK       | Посилання на Business                     |
+| date       | DateTime | Дата й час запису                         |
+| status     | Enum     | `scheduled` \| `completed` \| `cancelled` |
 
 ## Правила цілісності, які варто закласти в Prisma-схему
 

@@ -51,14 +51,15 @@ model Customer {
   id String @id @default(uuid()) @db.Uuid
   name String
   email String?
-  phone String?
+  phone String
   appointments Appointment[]
   businessId String @db.Uuid
 
   business Business @relation(fields: [businessId], references: [id], onDelete: Restrict)
 
-  @@index([businessId])
-
+  // @@index([businessId]) - this do following lines as well
+  @@unique([businessId, phone])
+  @@unique([businessId, email])
 }
 
 model Service {

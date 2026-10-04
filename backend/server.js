@@ -27,7 +27,7 @@ app.get('/health', (req, res) => {
 
 app.use(errorHandler); // should be after all middlewares and routes
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 6000;
 
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server listening on http://0.0.0.0:${PORT}`);
