@@ -7,16 +7,16 @@ import { Prisma } from '../../generated/prisma/client.ts';
 const register = async (data) => {
     const { businessName, name, email, password: pwd } = data;
 
+    const salt = await bcrypt.genSalt();
+    const password = await bcrypt.hash(pwd, salt);
+
     try {
-        return prisma.$transaction(async (tx) => {
+        return await prisma.$transaction(async (tx) => {
             const business = await tx.business.create({
                 data: {
                     name: businessName,
                 },
             });
-
-            const salt = await bcrypt.genSalt();
-            const password = await bcrypt.hash(pwd, salt);
 
             const user = await tx.user.create({
                 data: {
