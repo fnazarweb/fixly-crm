@@ -15,12 +15,11 @@ const Login = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const [login, { isLoading, isError, error }] = useLoginMutation();
+    const [login] = useLoginMutation();
 
     const onSubmit = async (loginData) => {
         try {
-            const user = await login(loginData).unwrap();
-            console.log(user);
+            await login(loginData).unwrap();
             navigate(location.state?.from || '/dashboard', {
                 replace: true,
             });
@@ -36,33 +35,31 @@ const Login = () => {
     };
 
     return (
-        !isLoading && (
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <label htmlFor="email">Email</label>
-                <input
-                    id="email"
-                    {...register('email', {
-                        required: 'Email is required',
-                    })}
-                />
-                {errors.email && <p>{errors.email.message}</p>}
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <label htmlFor="email">Email</label>
+            <input
+                id="email"
+                {...register('email', {
+                    required: 'Email is required',
+                })}
+            />
+            {errors.email && <p>{errors.email.message}</p>}
 
-                <label htmlFor="password">Password</label>
-                <input
-                    id="password"
-                    {...register('password', {
-                        required: 'Password is required',
-                    })}
-                />
-                {errors.password && <p>{errors.password.message}</p>}
+            <label htmlFor="password">Password</label>
+            <input
+                id="password"
+                {...register('password', {
+                    required: 'Password is required',
+                })}
+            />
+            {errors.password && <p>{errors.password.message}</p>}
 
-                {errors.root?.message && <p>{errors.root.message}</p>}
+            {errors.root?.message && <p>{errors.root.message}</p>}
 
-                <button type="submit" disabled={isSubmitting}>
-                    Login
-                </button>
-            </form>
-        )
+            <button type="submit" disabled={isSubmitting}>
+                Login
+            </button>
+        </form>
     );
 };
 

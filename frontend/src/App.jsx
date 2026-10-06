@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Layout from './Layout/Layout';
+import Customers from './pages/Customers';
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
 
                 <Route element={<ProtectedRoute />}>
                     <Route path="dashboard" element={<Dashboard />}></Route>
+                    <Route path="customers" element={<Customers />}></Route>
                 </Route>
             </Route>
         </Routes>

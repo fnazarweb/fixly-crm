@@ -20,7 +20,7 @@ const Register = () => {
 
     const onSubmit = async (registerData) => {
         try {
-            //using unwrap to have possibility doing try catch
+            // using unwrap to have possibility doing try catch
             const result = await registerUser(registerData).unwrap();
             console.log(result);
             navigate('/login', {
